@@ -1,63 +1,82 @@
-###############################################################################
-# Set default behavior to automatically normalize line endings.
-###############################################################################
-* text=auto
+import java.util.Scanner;
 
-###############################################################################
-# Set default behavior for command prompt diff.
-#
-# This is need for earlier builds of msysgit that does not have it on by
-# default for csharp files.
-# Note: This is only used by command line
-###############################################################################
-#*.cs     diff=csharp
-
-###############################################################################
-# Set the merge driver for project and solution files
-#
-# Merging from the command prompt will add diff markers to the files if there
-# are conflicts (Merging from VS is not affected by the settings below, in VS
-# the diff markers are never inserted). Diff markers may cause the following 
-# file extensions to fail to load in VS. An alternative would be to treat
-# these files as binary and thus will always conflict and require user
-# intervention with every merge. To do so, just uncomment the entries below
-###############################################################################
-#*.sln       merge=binary
-#*.csproj    merge=binary
-#*.vbproj    merge=binary
-#*.vcxproj   merge=binary
-#*.vcproj    merge=binary
-#*.dbproj    merge=binary
-#*.fsproj    merge=binary
-#*.lsproj    merge=binary
-#*.wixproj   merge=binary
-#*.modelproj merge=binary
-#*.sqlproj   merge=binary
-#*.wwaproj   merge=binary
-
-###############################################################################
-# behavior for image files
-#
-# image files are treated as binary by default.
-###############################################################################
-#*.jpg   binary
-#*.png   binary
-#*.gif   binary
-
-###############################################################################
-# diff behavior for common document formats
-# 
-# Convert binary document formats to text before diffing them. This feature
-# is only available from the command line. Turn it on by uncommenting the 
-# entries below.
-###############################################################################
-#*.doc   diff=astextplain
-#*.DOC   diff=astextplain
-#*.docx  diff=astextplain
-#*.DOCX  diff=astextplain
-#*.dot   diff=astextplain
-#*.DOT   diff=astextplain
-#*.pdf   diff=astextplain
-#*.PDF   diff=astextplain
-#*.rtf   diff=astextplain
-#*.RTF   diff=astextplain
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Funcionario[] funcionarios = new Funcionario[100];
+        int numFuncionarios = 0;
+        
+        while (true) {
+            System.out.println("Escolha uma opção:");
+            System.out.println("1 - Cadastrar um novo funcionário");
+            System.out.println("2 - Listar todos os funcionários cadastrados");
+            System.out.println("3 - Buscar um funcionário pelo CPF");
+            System.out.println("4 - Sair do programa");
+            
+            int opcao = scanner.nextInt();
+            
+            if (opcao == 1) {
+                scanner.nextLine(); // limpa o buffer do teclado
+                
+                System.out.println("Digite o nome do funcionário:");
+                String nome = scanner.nextLine();
+                
+                System.out.println("Digite o CPF do funcionário:");
+                String cpf = scanner.nextLine();
+                
+                System.out.println("Digite o cargo do funcionário:");
+                String cargo = scanner.nextLine();
+                
+                System.out.println("Digite o salário base do funcionário:");
+                double salarioBase = scanner.nextDouble();
+                
+                System.out.println("Digite o número de horas trabalhadas pelo funcionário:");
+                int horasTrabalhadas = scanner.nextInt();
+                
+                System.out.println("Digite o valor dos adicionais do funcionário:");
+                double adicionais = scanner.nextDouble();
+                
+                System.out.println("Digite o valor dos descontos do funcionário:");
+                double descontos = scanner.nextDouble();
+                
+                System.out.println("Digite o valor dos benefícios do funcionário:");
+                double beneficios = scanner.nextDouble();
+                
+                Funcionario novoFuncionario = new Funcionario(nome, cpf, cargo, salarioBase, horasTrabalhadas, adicionais, descontos, beneficios);
+                
+                funcionarios[numFuncionarios] = novoFuncionario;
+                numFuncionarios++;
+                
+                System.out.println("Funcionário cadastrado com sucesso!");
+                
+            } else if (opcao == 2) {
+                System.out.println("Lista de funcionários:");
+                
+                for (int i = 0; i < numFuncionarios; i++) {
+                    Funcionario f = funcionarios[i];
+                    System.out.println("Nome: " + f.getNome());
+                    System.out.println("CPF: " + f.getCpf());
+                    System.out.println("Cargo: " + f.getCargo());
+                    System.out.println("Salário Líquido: " + f.calcularSalarioLiquido());
+                    System.out.println("Adicionais: " + f.getAdicionais());
+                    System.out.println("Descontos: " + f.getDescontos());
+                    System.out.println("Benefícios: " + f.getBeneficios());
+                    System.out.println();
+                }
+                
+            } else if (opcao == 3) {
+                scanner.nextLine(); // limpa o buffer do teclado
+                
+                System.out.println("Digite o CPF do funcionário que deseja buscar:");
+                String cpf = scanner.nextLine();
+                
+                boolean encontrado = false;
+                
+                for (int i = 0; i < numFuncionarios; i++) {
+                    Funcionario f = funcionarios[i];
+                    
+                    if (f.getCpf().equals(cpf)) {
+                        System.out.println("Nome: " + f.getNome());
+                        System.out.println("CPF: " + f.getCpf());
+                        System.out.println("Cargo: " + f.getCargo());
+                        System.out.println("Salário Líquido: " + f.calcularSalarioLiquido());
